@@ -1,0 +1,13 @@
+C:\Users\GPOS\Desktop\Lemmingz\Lemmingz\obj\x86\Debug\ResolveAssemblyReference.cache
+C:\Users\GPOS\Desktop\Lemmingz\Lemmingz\bin\Debug\Lemmingz.exe
+C:\Users\GPOS\Desktop\Lemmingz\Lemmingz\bin\Debug\Lemmingz.pdb
+C:\Users\GPOS\Desktop\Lemmingz\Lemmingz\bin\Debug\Lidgren.Network.dll
+C:\Users\GPOS\Desktop\Lemmingz\Lemmingz\bin\Debug\MonoGame.Framework.Windows.dll
+C:\Users\GPOS\Desktop\Lemmingz\Lemmingz\bin\Debug\OpenTK.dll
+C:\Users\GPOS\Desktop\Lemmingz\Lemmingz\bin\Debug\Tao.Sdl.dll
+C:\Users\GPOS\Desktop\Lemmingz\Lemmingz\bin\Debug\Lidgren.Network.Windows.dll
+C:\Users\GPOS\Desktop\Lemmingz\Lemmingz\bin\Debug\Lidgren.Network.xml
+C:\Users\GPOS\Desktop\Lemmingz\Lemmingz\bin\Debug\Lidgren.Network.Windows.xml
+C:\Users\GPOS\Desktop\Lemmingz\Lemmingz\obj\x86\Debug\Lemmingz.exe
+C:\Users\GPOS\Desktop\Lemmingz\Lemmingz\obj\x86\Debug\Lemmingz.pdb
+C:\Users\GPOS\Desktop\Lemmingz\Lemmingz\bin\Debug\Content\Graphics\lemming1.xnb
