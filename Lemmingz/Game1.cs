@@ -23,6 +23,8 @@ namespace Lemmingz
         LemmingzManager lemmingzManager;
         UpdateManager updateManager;
         Texture2D lemming;
+        Texture2D ground;
+        Texture2D soil;
 
 
         public Game1()
@@ -41,8 +43,8 @@ namespace Lemmingz
         protected override void Initialize()
         {
             // TODO: Add your initialization logic here
-            oneMap = new Map(15, 10);
-            lemmingzManager = new LemmingzManager(800, Direction.DOWN, Side.ALLY, new Vector2(0, 0), new Vector2(15, 10), oneMap, 1000);
+            oneMap = new Map(7, 7);
+            lemmingzManager = new LemmingzManager(0.2, Direction.LEFT, Side.ALLY, new Vector2(0, 0), new Vector2(7, 7), oneMap, -1, 1000);
             updateManager = new UpdateManager(lemmingzManager);
             base.Initialize();
         }
@@ -57,6 +59,8 @@ namespace Lemmingz
             spriteBatch = new SpriteBatch(GraphicsDevice);
             
             lemming = Content.Load<Texture2D>("Graphics\\lemming1");
+            ground = Content.Load<Texture2D>("Graphics\\ground");
+            soil = Content.Load<Texture2D>("Graphics\\soil");
             
             // TODO: use this.Content to load your game content here
         }
@@ -84,6 +88,9 @@ namespace Lemmingz
             lemmingzManager.createLemmingz(gameTime);
             lemmingzManager.moveLemmingz(gameTime);
             updateManager.updateLemmingz(gameTime);
+
+            updateManager.updateObstacle(gameTime);
+
             base.Update(gameTime);
         }
 
@@ -97,8 +104,21 @@ namespace Lemmingz
 
             // TODO: Add your drawing code here
             spriteBatch.Begin();
+            foreach (ObstacleOnDisplay o in updateManager.getObstaclesOnDisplay())
+            {
+                switch(o.getObstacle().getType())
+                {
+                    case ObstacleType.EMPTY:
+                        spriteBatch.Draw(ground, o.getDisplay(), Color.White);
+                        break;
+                    case ObstacleType.SOIL:
+                        spriteBatch.Draw(soil, o.getDisplay(), Color.White);
+                        break;
+                }
+            }
+
             foreach (LemmingOnDisplay l in updateManager.getLemmingzOnDisplay())
-                spriteBatch.Draw(lemming, l.getLemmingDisplay(), Color.White);
+                spriteBatch.Draw(lemming, l.getDisplay(), Color.White);
             spriteBatch.End();
             base.Draw(gameTime);
         }

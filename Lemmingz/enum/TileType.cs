@@ -5,7 +5,8 @@ using System.Text;
 
 namespace Lemmingz
 {
-    public class Tile
-    {
-    }
+	public enum TileType
+	{
+        GROUND = 1
+	}
 }

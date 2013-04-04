@@ -22,7 +22,7 @@ namespace Lemmingz
         private LemmingzFactory factory;
         private Map map;
 
-        public LemmingzManager(double speed, Direction direction, Side side, Vector2 spwaningPoint, Vector2 endPoint, Map map, double spwaningTiming = 1000)
+        public LemmingzManager(double speed, Direction direction, Side side, Vector2 spwaningPoint, Vector2 endPoint, Map map, int count, double spwaningTiming = 1000)
         {
             this.speed = speed;
             this.spwaningTiming = spwaningTiming;
@@ -35,12 +35,18 @@ namespace Lemmingz
             this.spwaningPoint = spwaningPoint;
             this.endPoint = endPoint;
             this.lemmingzList = new List<Lemming>();
-            this.factory = new LemmingzFactory(side, directionAtStart, speed, spwaningPoint, map);
+            this.factory = new LemmingzFactory(side, directionAtStart, speed, spwaningPoint, count, map);
+            this.map = map;
         }
 
         public List<Lemming> getLemmingzList()
         {
             return lemmingzList;
+        }
+
+        public Map getMap()
+        {
+            return map;
         }
 
         public double getLastUpdatedMovingTime()
@@ -56,25 +62,24 @@ namespace Lemmingz
         public void moveLemmingz(GameTime gameTime)
         {
             double time = (double)gameTime.TotalGameTime.TotalMilliseconds;
-            elapsedMovingTime = time - lastUpdatedMovingTime;
-            if (speed < elapsedMovingTime)
+            foreach (Lemming lemming in lemmingzList)
             {
-                lastUpdatedMovingTime = time;
-                foreach (Lemming lemming in lemmingzList)
-                {
+                if (lemming.isTimeToMove(time))
                     lemming.moveToNextDestination();
-                }
             }
         }
 
         public void createLemmingz(GameTime gameTime)
         {
-            double time = (double)gameTime.TotalGameTime.TotalMilliseconds;
-            elapsedSpwaningTime = time - lastUpdatedSpwaningTime;
-            if (spwaningTiming < elapsedSpwaningTime)
+            if (factory.canCreateMoreLemming())
             {
-                lastUpdatedSpwaningTime = time;
-                lemmingzList.Add(factory.createLemming());
+                double time = (double)gameTime.TotalGameTime.TotalMilliseconds;
+                elapsedSpwaningTime = time - lastUpdatedSpwaningTime;
+                if (spwaningTiming < elapsedSpwaningTime)
+                {
+                    lastUpdatedSpwaningTime = time;
+                    lemmingzList.Add(factory.createLemming(time));
+                }
             }
         }
     }

@@ -35,18 +35,25 @@
     <ApplicationIcon>Icon.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="Display\ObstacleOnDisplay.cs" />
+    <Compile Include="Display\TileOnDisplay.cs" />
+    <Compile Include="enum\ObstacleType.cs" />
+    <Compile Include="enum\TileType.cs" />
+    <Compile Include="Common\Ground.cs" />
+    <Compile Include="Common\Obstacle.cs" />
+    <Compile Include="Common\Soil.cs" />
     <Compile Include="UpdateManager.cs" />
     <Compile Include="enum\Direction.cs" />
     <Compile Include="enum\Side.cs" />
     <Compile Include="Game1.cs" />
-    <Compile Include="Lemming.cs" />
-    <Compile Include="LemmingOnDisplay.cs" />
+    <Compile Include="Common\Lemming.cs" />
+    <Compile Include="Display\LemmingOnDisplay.cs" />
     <Compile Include="LemmingzFactory.cs" />
     <Compile Include="LemmingzManager.cs" />
-    <Compile Include="Map.cs" />
+    <Compile Include="Common\Map.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Tile.cs" />
+    <Compile Include="Common\Tile.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="OpenTK">
@@ -71,6 +78,10 @@
     <Content Include="Content\Graphics\lemming1.xnb">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Content\Graphics\ground.xnb" />
+    <None Include="Content\Graphics\soil.xnb" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

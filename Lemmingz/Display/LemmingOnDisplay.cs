@@ -11,35 +11,37 @@ namespace Lemmingz
     public class LemmingOnDisplay
     {
         private Lemming lemming;
-        private LemmingzManager lemmingzManager;
         private Vector2 displayedPosition;
         private int cellPixel = 48;
-        private String lemmingImageFile;
+        private String ImageFile;
 
-        public LemmingOnDisplay(Lemming lemming, LemmingzManager lemmingzManager)
+        public LemmingOnDisplay(Lemming lemming)
         {
             cellPixel = 48;
             this.lemming = lemming;
-            this.lemmingzManager = lemmingzManager;
-            getImageFileName();
+            ImageFile = getImageFileName();
         }
 
-        private void getImageFileName()
+        private String getImageFileName()
         {
-            lemmingImageFile = "Content" + "lemming" + "1";
+            return "Content" + "lemming" + "1";
         }
 
-        public void setLemmingDisplay(GameTime gametime, Lemming lemming)
+        public Lemming getLemming()
         {
-            double lemmingSpeed = lemming.getSpeed();
-            double ratio = ((double)gametime.TotalGameTime.TotalMilliseconds - lemmingzManager.getLastUpdatedMovingTime()) / lemmingSpeed;
+            return lemming;
+        }
+
+        public void setDisplay(GameTime gametime)
+        {
+            double ratio = lemming.getMovedDistance() / 1000;
             double currentX = (lemming.getPreviousPosition().X + (lemming.getCurrentPosition().X - lemming.getPreviousPosition().X) * ratio) * cellPixel;
             double currentY = (lemming.getPreviousPosition().Y + (lemming.getCurrentPosition().Y - lemming.getPreviousPosition().Y) * ratio) * cellPixel;
             displayedPosition = new Vector2((float)currentX, (float)currentY);
             lemming.putOnDisplay();
         }
 
-        public Vector2 getLemmingDisplay()
+        public Vector2 getDisplay()
         {
             return displayedPosition;
         }

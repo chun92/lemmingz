@@ -17,8 +17,10 @@ namespace Lemmingz
         private Side side;
         private Map map;
         private bool onDisplay;
+        private double lastMovedTime;
+        private double movedDistance;
 
-        public Lemming(double movingSpeed, Vector2 position, Direction direction, Side side, Map map)
+        public Lemming(double movingSpeed, Vector2 position, Direction direction, Side side, double time, Map map)
         {
             this.movingSpeed = movingSpeed;
             this.currentPosition = position;
@@ -27,6 +29,8 @@ namespace Lemmingz
             id = ++totalNumber;
             this.previousPosition = new Vector2();
             this.map = map;
+            this.lastMovedTime = time;
+            this.movedDistance = 0;
             this.onDisplay = false;
         }
         public Vector2 getCurrentPosition()
@@ -69,7 +73,10 @@ namespace Lemmingz
         {
             return this.onDisplay;
         }
-
+        public double getMovedDistance()
+        {
+            return movedDistance;
+        }
 
         private bool canMove(Vector2 target)
         {
@@ -92,9 +99,9 @@ namespace Lemmingz
                 case Direction.RIGHT:
                     return new Vector2(currentPosition.X + 1, currentPosition.Y);
                 case Direction.UP:
-                    return new Vector2(currentPosition.X, currentPosition.Y + 1);
-                case Direction.DOWN:
                     return new Vector2(currentPosition.X, currentPosition.Y - 1);
+                case Direction.DOWN:
+                    return new Vector2(currentPosition.X, currentPosition.Y + 1);
                 default:
                     return new Vector2(-1, -1);
             }
@@ -108,9 +115,9 @@ namespace Lemmingz
                 case Direction.RIGHT:
                     return new Vector2(currentPosition.X - 1, currentPosition.Y);
                 case Direction.UP:
-                    return new Vector2(currentPosition.X, currentPosition.Y - 1);
-                case Direction.DOWN:
                     return new Vector2(currentPosition.X, currentPosition.Y + 1);
+                case Direction.DOWN:
+                    return new Vector2(currentPosition.X, currentPosition.Y - 1);
                 default:
                     return new Vector2(-1, -1);
             }
@@ -121,7 +128,7 @@ namespace Lemmingz
         }
         private bool canGoBackward()
         {
-            return canMove(getForward());
+            return canMove(getBackward());
         }
         private Vector2 getNextDestination()
         {
@@ -138,7 +145,7 @@ namespace Lemmingz
             else if (canGoBackward())
                 return getBackward();
             else
-                return new Vector2(-1,-1); // 멈춤. 망함. 이러면 안됨.
+                return this.currentPosition; // 멈춤.
         }
         private List<Vector2> getPossibleNextDestination()
         {
@@ -188,6 +195,39 @@ namespace Lemmingz
             previousPosition.Y = currentPosition.Y;
             currentPosition.X = destination.X;
             currentPosition.Y = destination.Y;
+            direction = getDirection(previousPosition, currentPosition);
+        }
+        public Direction getDirection(Vector2 source, Vector2 destination)
+        {
+            float dx = destination.X - source.X;
+            float dy = destination.Y - source.Y;
+
+            if (Math.Abs(dx) > Math.Abs(dy))
+            {
+                if (dx > 0)
+                    return Direction.RIGHT;
+                else
+                    return Direction.LEFT;
+            }
+            else
+            {
+                if (dy > 0)
+                    return Direction.DOWN;
+                else
+                    return Direction.UP;
+            }
+        }
+        public bool isTimeToMove(double time)
+        {
+            movedDistance = movedDistance + (time - lastMovedTime) * movingSpeed;
+            if (movedDistance >= 1000)
+            {
+                movedDistance = movedDistance - 1000;
+                lastMovedTime = time;
+                return true;
+            }
+            else
+                return false;
         }
     }
 }
